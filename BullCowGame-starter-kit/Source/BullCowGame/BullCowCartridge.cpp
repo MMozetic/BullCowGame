@@ -15,7 +15,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else
     {
-        if (GuessHiddenNumber(Input))
+        if (CheckGuessedHiddenNumber(Input))
         {
             PrintLine(TEXT("You win!"));
             EndGame();
@@ -50,7 +50,7 @@ bool UBullCowCartridge::AreDigitsDifferent(const FString& Number)
     return true;
 }
 
-bool UBullCowCartridge::GuessHiddenNumber(const FString& InputNumber)
+bool UBullCowCartridge::CheckGuessedHiddenNumber(const FString& InputNumber)
 {
 
     bool ReturnStatus = false;
