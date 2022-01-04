@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Console/Cartridge.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
 #include "BullCowCartridge.generated.h"
 
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -14,7 +16,7 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 	public:
 		virtual void BeginPlay() override;
 		virtual void OnInput(const FString& Input) override;
-		void InitializeGame(const FString& Number);
+		void InitializeGame();
 		void EndGame();
 	// Your declarations go below!
 	private:
@@ -23,4 +25,6 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 		FString HiddenNumber;
 		int8 Lives;
 		bool bGameOver;
+		TArray<FString> Numbers;
+		int8 Level;
 };
