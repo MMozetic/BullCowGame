@@ -26,5 +26,4 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 		int8 Lives;
 		bool bGameOver;
 		TArray<FString> Numbers;
-		int8 Level;
 };

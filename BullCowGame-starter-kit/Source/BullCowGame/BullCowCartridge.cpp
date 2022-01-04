@@ -8,11 +8,10 @@ void UBullCowCartridge::BeginPlay() // When the game starts
     const FString NumbersListPath = FPaths::ProjectContentDir() / TEXT("NumbersList/Numbers.txt");
     FFileHelper::LoadFileToStringArray(Numbers, *NumbersListPath);
 
-    Level = 0;
     InitializeGame();
 }
 
-void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
+void UBullCowCartridge::OnInput(const FString& PlayerInput) // When the player hits enter
 {
     if (bGameOver)
     {
@@ -20,7 +19,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
     else
     {
-        if (CheckGuessedHiddenNumber(Input))
+        if (CheckGuessedHiddenNumber(PlayerInput))
         {
             PrintLine(TEXT("You win!"));
             EndGame();
@@ -31,7 +30,6 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         }
         else
         {
-            Level = 0;
             PrintLine(TEXT("You lose!"));
             EndGame();
         }
@@ -42,7 +40,7 @@ void UBullCowCartridge::InitializeGame()
 {
     ClearScreen();
 
-    HiddenNumber = Numbers[Level];
+    HiddenNumber = Numbers[FMath::RandRange(0, Numbers.Num())];
     Lives = HiddenNumber.Len();
     bGameOver = false;
 
@@ -51,12 +49,10 @@ void UBullCowCartridge::InitializeGame()
     // ****************************
     PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
     PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
-    PrintLine(TEXT("You have %i lives. Current level is %i."), Lives, Level+1);
+    PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
 
     PrintLine(TEXT("DEBUG: %s"), *HiddenNumber);
-
-    Level = ++Level % Numbers.Num();
 }
 
 bool UBullCowCartridge::AreDigitsDifferent(const FString& Number) const
