@@ -22,8 +22,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         }
         else if (Lives)
         {
-            PrintLine(TEXT("Try again..."));
-            PrintLine(TEXT("Remaining Lives: %i"), Lives);
+            PrintLine(TEXT("Try again... Remaining Lives: %i"), Lives);
             return;
         }
         else
@@ -97,6 +96,7 @@ void UBullCowCartridge::InitializeGame(const FString& Number)
     // ****************************
     PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
     PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
+    PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
 }
 
