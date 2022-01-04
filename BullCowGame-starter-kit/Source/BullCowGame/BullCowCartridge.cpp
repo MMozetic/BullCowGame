@@ -10,8 +10,7 @@ void UBullCowCartridge::BeginPlay() // When the game starts
     // Introductory messages
     // ****************************
     PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
-    PrintLine(TEXT("Guess the " + FString::FromInt(HiddenNumber.Len()) +
-        " digit number with all different digits."));
+    PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
     PrintLine(TEXT("Please press ENTER to continue..."));
 }
 
@@ -27,7 +26,7 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         if (Lives)
         {
             PrintLine(TEXT("Try again..."));
-            PrintLine(TEXT("Remaining Lives: " + FString::FromInt(Lives)));
+            PrintLine(TEXT("Remaining Lives: %i"), Lives);
         }
         else
         {
@@ -60,7 +59,7 @@ bool UBullCowCartridge::GuessHiddenNumber(const FString& InputNumber)
 
     if (InputNumber.Len() != HiddenNumber.Len())
     {
-        PrintLine(TEXT("Entered Number has different number of digits compared to Hidden Number."));
+        PrintLine(TEXT("Hidden Number is %i digits long, but %i are entered."), HiddenNumber.Len(), InputNumber.Len());
         --Lives;
     }
     else if (!AreDigitsDifferent(InputNumber))
