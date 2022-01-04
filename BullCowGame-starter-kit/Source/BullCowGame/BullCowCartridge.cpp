@@ -23,7 +23,6 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
         else if (Lives)
         {
             PrintLine(TEXT("Try again... Remaining Lives: %i"), Lives);
-            return;
         }
         else
         {
