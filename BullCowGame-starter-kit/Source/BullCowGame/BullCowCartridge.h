@@ -18,7 +18,7 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 		void EndGame();
 	// Your declarations go below!
 	private:
-		bool AreDigitsDifferent(const FString& Number);
+		bool AreDigitsDifferent(const FString& Number) const;
 		bool CheckGuessedHiddenNumber(const FString& GuessedNumber);
 		FString HiddenNumber;
 		int8 Lives;

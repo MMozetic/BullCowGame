@@ -32,14 +32,31 @@ void UBullCowCartridge::OnInput(const FString& Input) // When the player hits en
     }
 }
 
-bool UBullCowCartridge::AreDigitsDifferent(const FString& Number)
+void UBullCowCartridge::InitializeGame(const FString& Number)
+{
+    ClearScreen();
+
+    HiddenNumber = Number;
+    Lives = HiddenNumber.Len();
+    bGameOver = false;
+
+    // ****************************
+    // Introductory messages
+    // ****************************
+    PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
+    PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
+    PrintLine(TEXT("You have %i lives."), Lives);
+    PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
+}
+
+bool UBullCowCartridge::AreDigitsDifferent(const FString& Number) const
 {
     // Loop through the Number and check if some digits are repeating itself.
 
-    for (int i = 0; i < Number.Len()-1; ++i)
+    for (int32 Index = 0; Index < Number.Len()-1; ++Index)
     {
-        for (int j = i + 1; j < Number.Len(); ++j) {
-            if (Number[i] == Number[j])
+        for (int32 Index2 = Index + 1; Index2 < Number.Len(); ++Index2) {
+            if (Number[Index] == Number[Index2])
             {
                 return false;
             }
@@ -58,14 +75,14 @@ bool UBullCowCartridge::CheckGuessedHiddenNumber(const FString& GuessedNumber)
     {
         PrintLine(TEXT("Hidden Number is %i digits long, but %i are entered."), HiddenNumber.Len(), GuessedNumber.Len());
     }
-    else if (!AreDigitsDifferent(GuessedNumber))
-    {
-        PrintLine(TEXT("Input Number has digits that are repeating."));
-    }
     else if (GuessedNumber == HiddenNumber)
     {
         PrintLine(TEXT("You have guessed the Hidden Number. Congrats!"));
         ReturnStatus = true;
+    }
+    else if (!AreDigitsDifferent(GuessedNumber))
+    {
+        PrintLine(TEXT("Input Number has digits that are repeating."));
     }
     else if (GuessedNumber != HiddenNumber)
     {
@@ -80,25 +97,9 @@ bool UBullCowCartridge::CheckGuessedHiddenNumber(const FString& GuessedNumber)
     return ReturnStatus;
 }
 
-void UBullCowCartridge::InitializeGame(const FString& Number)
-{
-    ClearScreen();
-
-    HiddenNumber = Number;
-    Lives = HiddenNumber.Len();
-    bGameOver = false;
-
-    // ****************************
-    // Introductory messages
-    // ****************************
-    PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
-    PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
-    PrintLine(TEXT("You have %i lives."), Lives);
-    PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
-}
-
 void UBullCowCartridge::EndGame()
 {
     bGameOver = true;
+    PrintLine(TEXT("The hidden number was %s."), *HiddenNumber);
     PrintLine(TEXT("Press ENTER to play again."));
 }
