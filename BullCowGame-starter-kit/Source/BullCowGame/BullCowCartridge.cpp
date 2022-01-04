@@ -40,7 +40,7 @@ void UBullCowCartridge::InitializeGame()
 {
     ClearScreen();
 
-    HiddenNumber = Numbers[FMath::RandRange(0, Numbers.Num())];
+    HiddenNumber = Numbers[FMath::RandRange(0, Numbers.Num()-1)];
     Lives = HiddenNumber.Len();
     bGameOver = false;
 
