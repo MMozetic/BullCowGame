@@ -15,10 +15,12 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 		virtual void BeginPlay() override;
 		virtual void OnInput(const FString& Input) override;
 		void InitializeGame(const FString& Number);
+		void EndGame();
 	// Your declarations go below!
 	private:
 		bool AreDigitsDifferent(const FString& Number);
 		bool GuessHiddenNumber(const FString& InputNumber);
 		FString HiddenNumber;
 		int8 Lives;
+		bool bGameOver;
 };

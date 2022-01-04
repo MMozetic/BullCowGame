@@ -5,32 +5,31 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 {
     Super::BeginPlay();
     InitializeGame("1234");
-
-    // ****************************
-    // Introductory messages
-    // ****************************
-    PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
-    PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
-    PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
 {
-    ClearScreen();
-    if (GuessHiddenNumber(Input))
+    if (bGameOver)
     {
-        PrintLine(TEXT("You win!"));
+        InitializeGame("12345");
     }
     else
     {
-        if (Lives)
+        if (GuessHiddenNumber(Input))
+        {
+            PrintLine(TEXT("You win!"));
+            EndGame();
+        }
+        else if (Lives)
         {
             PrintLine(TEXT("Try again..."));
             PrintLine(TEXT("Remaining Lives: %i"), Lives);
+            return;
         }
         else
         {
             PrintLine(TEXT("You lose!"));
+            EndGame();
         }
     }
 }
@@ -87,7 +86,22 @@ bool UBullCowCartridge::GuessHiddenNumber(const FString& InputNumber)
 
 void UBullCowCartridge::InitializeGame(const FString& Number)
 {
-    // Set the new HiddenNumber and the number of Lives.
+    ClearScreen();
+
     HiddenNumber = Number;
     Lives = HiddenNumber.Len();
+    bGameOver = false;
+
+    // ****************************
+    // Introductory messages
+    // ****************************
+    PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
+    PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
+    PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
+}
+
+void UBullCowCartridge::EndGame()
+{
+    bGameOver = true;
+    PrintLine(TEXT("Press ENTER to play again."));
 }
