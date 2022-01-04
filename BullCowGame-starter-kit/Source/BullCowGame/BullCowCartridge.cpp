@@ -57,12 +57,10 @@ bool UBullCowCartridge::CheckGuessedHiddenNumber(const FString& GuessedNumber)
     if (GuessedNumber.Len() != HiddenNumber.Len())
     {
         PrintLine(TEXT("Hidden Number is %i digits long, but %i are entered."), HiddenNumber.Len(), GuessedNumber.Len());
-        --Lives;
     }
     else if (!AreDigitsDifferent(GuessedNumber))
     {
         PrintLine(TEXT("Input Number has digits that are repeating."));
-        --Lives;
     }
     else if (GuessedNumber == HiddenNumber)
     {
