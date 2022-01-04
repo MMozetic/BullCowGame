@@ -50,27 +50,27 @@ bool UBullCowCartridge::AreDigitsDifferent(const FString& Number)
     return true;
 }
 
-bool UBullCowCartridge::CheckGuessedHiddenNumber(const FString& InputNumber)
+bool UBullCowCartridge::CheckGuessedHiddenNumber(const FString& GuessedNumber)
 {
 
     bool ReturnStatus = false;
 
-    if (InputNumber.Len() != HiddenNumber.Len())
+    if (GuessedNumber.Len() != HiddenNumber.Len())
     {
-        PrintLine(TEXT("Hidden Number is %i digits long, but %i are entered."), HiddenNumber.Len(), InputNumber.Len());
+        PrintLine(TEXT("Hidden Number is %i digits long, but %i are entered."), HiddenNumber.Len(), GuessedNumber.Len());
         --Lives;
     }
-    else if (!AreDigitsDifferent(InputNumber))
+    else if (!AreDigitsDifferent(GuessedNumber))
     {
         PrintLine(TEXT("Input Number has digits that are repeating."));
         --Lives;
     }
-    else if (InputNumber == HiddenNumber)
+    else if (GuessedNumber == HiddenNumber)
     {
         PrintLine(TEXT("You have guessed the Hidden Number. Congrats!"));
         ReturnStatus = true;
     }
-    else if (InputNumber != HiddenNumber)
+    else if (GuessedNumber != HiddenNumber)
     {
         PrintLine(TEXT("Entered Number and Hidden Number are different."));
         --Lives;
