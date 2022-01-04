@@ -13,7 +13,15 @@ void UBullCowCartridge::BeginPlay() // When the game starts
 
 void UBullCowCartridge::OnInput(const FString& PlayerInput) // When the player hits enter
 {
-    if (bGameOver)
+    if (PlayerInput == "history")
+    {
+        ClearScreen();
+        for (HistoryCount CountInstance : History)
+        {
+            PrintLine(TEXT("Guess: %s, Bulls: %i, Cows: %i"), *CountInstance.Guess, CountInstance.Count.Bulls, CountInstance.Count.Cows);
+        }
+    }
+    else if (bGameOver)
     {
         InitializeGame();
     }
@@ -29,6 +37,11 @@ void UBullCowCartridge::OnInput(const FString& PlayerInput) // When the player h
             PrintLine(TEXT("Try again... Remaining Lives: %i"), Lives);
             BullCowCount Count = GetBullsCows(PlayerInput);
             PrintLine(TEXT("Bulls: %i, Cows: %i"), Count.Bulls, Count.Cows);
+
+            HistoryCount CountInstance;
+            CountInstance.Guess = PlayerInput;
+            CountInstance.Count = Count;
+            History.Emplace(CountInstance);
         }
         else
         {
@@ -52,8 +65,6 @@ void UBullCowCartridge::InitializeGame()
     PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
     PrintLine(TEXT("You have %i lives."), Lives);
     PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
-
-    PrintLine(TEXT("DEBUG: %s"), *HiddenNumber);
 }
 
 bool UBullCowCartridge::AreDigitsDifferent(const FString& Number) const

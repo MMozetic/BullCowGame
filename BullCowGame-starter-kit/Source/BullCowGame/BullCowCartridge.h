@@ -14,6 +14,12 @@ typedef struct FBullCowCount
 	int32 Cows = 0;
 } BullCowCount;
 
+typedef struct FHistoryCount
+{
+	FString Guess;
+	BullCowCount Count;
+} HistoryCount;
+
 UCLASS(ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 {
@@ -33,4 +39,5 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 		int8 Lives;
 		bool bGameOver;
 		TArray<FString> Numbers;
+		TArray<HistoryCount> History;
 };
