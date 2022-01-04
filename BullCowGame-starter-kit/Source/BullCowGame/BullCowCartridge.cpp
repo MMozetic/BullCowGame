@@ -11,7 +11,7 @@ void UBullCowCartridge::BeginPlay() // When the game starts
     // ****************************
     PrintLine(TEXT("Hello my friend! Welcome to Bull Cows."));
     PrintLine(TEXT("Guess the %i digit number with all different digits."), HiddenNumber.Len());
-    PrintLine(TEXT("Please press ENTER to continue..."));
+    PrintLine(TEXT("Type in your guess and press ENTER to continue..."));
 }
 
 void UBullCowCartridge::OnInput(const FString& Input) // When the player hits enter
