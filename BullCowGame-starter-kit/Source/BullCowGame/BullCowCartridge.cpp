@@ -26,10 +26,9 @@ void UBullCowCartridge::OnInput(const FString& PlayerInput) // When the player h
         }
         else if (Lives)
         {
-            int8 Bulls, Cows;
             PrintLine(TEXT("Try again... Remaining Lives: %i"), Lives);
-            GetBullsCows(PlayerInput, Bulls, Cows);
-            PrintLine(TEXT("Bulls: %i, Cows: %i"), Bulls, Cows);
+            BullCowCount Count = GetBullsCows(PlayerInput);
+            PrintLine(TEXT("Bulls: %i, Cows: %i"), Count.Bulls, Count.Cows);
         }
         else
         {
@@ -105,28 +104,26 @@ bool UBullCowCartridge::CheckGuessedHiddenNumber(const FString& GuessedNumber)
     return ReturnStatus;
 }
 
-void UBullCowCartridge::GetBullsCows(const FString& GuessedNumber, int8& Bulls, int8& Cows)
+BullCowCount UBullCowCartridge::GetBullsCows(const FString& GuessedNumber) const
 {
-    Bulls = 0;
-    Cows = 0;
+    BullCowCount Count;
     for (int8 Index = 0; Index < GuessedNumber.Len(); ++Index)
     {
-        if (GuessedNumber[Index] == HiddenNumber[Index])
+        int32 FindIndex;
+        if (HiddenNumber.FindChar(GuessedNumber[Index], FindIndex))
         {
-            ++Bulls;
-        }
-        else
-        {
-            for (int8 Compare = 0; Compare < HiddenNumber.Len(); ++Compare)
+            if (FindIndex == Index)
             {
-                if (GuessedNumber[Index] == HiddenNumber[Compare])
-                {
-                    ++Cows;
-                    break;
-                }
+                ++Count.Bulls;
+            }
+            else
+            {
+                ++Count.Cows;
             }
         }
     }
+    
+    return Count;
 }
 
 void UBullCowCartridge::EndGame()
