@@ -22,6 +22,7 @@ class BULLCOWGAME_API UBullCowCartridge : public UCartridge
 	private:
 		bool AreDigitsDifferent(const FString& Number) const;
 		bool CheckGuessedHiddenNumber(const FString& GuessedNumber);
+		void GetBullsCows(const FString& GuessedNumber, int8& Bulls, int8& Cows);
 		FString HiddenNumber;
 		int8 Lives;
 		bool bGameOver;
